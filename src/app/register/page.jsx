@@ -4,6 +4,7 @@
 import React from "react";
 import Authform from "../../components/authform/authform";
 import { z } from "zod";
+import { useSelector } from "react-redux";
 const formSchema = z.object({
   username: z.string().min(2).max(50),
   email: z.string().email("Invalid email"),
@@ -14,6 +15,7 @@ const formSchema = z.object({
 const register = () => {
   // const router = useRouter();
 
+  const userDatta = useSelector((state) => state.auth.authData);
   const defaultValues = {
     username: "",
     email: "",
@@ -21,6 +23,7 @@ const register = () => {
     password: "",
   };
 
+  console.log(userDatta);
   function onSubmit(values) {
     console.log(values);
   }
@@ -47,6 +50,7 @@ const register = () => {
           <div className=" gap-4 ">
             <span className=" pr-4"> Have an account ?</span>
             <span className=" font-semibold text-md"> Login</span>
+            <span>{userDatta.token}</span>
           </div>
         </div>
       </div>

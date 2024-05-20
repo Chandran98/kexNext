@@ -23,11 +23,15 @@ const authform = ({
   formSchema,
   defaultValues,
   classBame,
+  loading
 }) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
+
+
+
   return (
     <Form className="" {...form}>
       <form
@@ -56,7 +60,7 @@ const authform = ({
         })}
 
         <Button className={`${classBame}`} type="submit">
-          Submit
+       {loading? "loading"  :"Submit"}
         </Button>
       </form>
     </Form>

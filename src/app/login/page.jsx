@@ -1,24 +1,55 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Authform from "../../components/authform/authform";
 import { z } from "zod";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { signIn } from "@/redux/reducer/authReducer";
+import { useRouter } from "next/navigation";
+
 const formSchema = z.object({
   email: z.string().email("Invalid email"),
   password: z.string().min(6).max(20),
 });
 
 const login = () => {
-  // const router = useRouter();
+  const router = useRouter();
 
   const defaultValues = {
     email: "",
     password: "",
   };
+  const dispatch = useDispatch();
 
-  function onSubmit(values) {
-    console.log(values);
+  const {authData ,loading,error} = useSelector((state) => state.auth);
+
+  console.log("sttatte", authData);
+
+  async function onSubmit(values) {
+    let data = {
+      deviceInfo: {
+        browser: "",
+        browser_version: "",
+        os: "",
+        device: "mobile",
+      },
+      browser: "Chrome",
+      browser_version: "116.0.0.0",
+      device: "PC", //mobile,
+      os: "Linux", //others,
+      ipaddress: "123.45.678.900",
+      password: values.password,
+      username: values.email,
+    };
+    console.log(data);
+    dispatch(signIn(data)).then((res) => {
+      if (res.payload.status ==true) {
+
+        router.push("/profile");
+      }
+    });
   }
 
   const formFieldData = [
@@ -34,6 +65,7 @@ const login = () => {
         <div className="border-2 h-[30rem] p-8 rounded-2xl items-center justify-center w-[30rem] overflow-hidden">
           <Authform
             onSubmit={() => onSubmit}
+            loading={loading}
             formFieldData={formFieldData}
             formSchema={formSchema}
             defaultValues={defaultValues}
@@ -43,6 +75,7 @@ const login = () => {
           <div className=" gap-4 ">
             <span className=" pr-4"> Don't have an account ?</span>
             <span className=" font-semibold text-md"> Register</span>
+            {error&& <span>{error}</span>}
           </div>
         </div>
       </div>
@@ -51,4 +84,3 @@ const login = () => {
 };
 
 export default login;
-
