@@ -1,0 +1,54 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react-hooks/rules-of-hooks */
+"use client";
+import React from "react";
+import Authform from "../../components/authform/authform";
+import { z } from "zod";
+const formSchema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6).max(20),
+});
+
+const login = () => {
+  // const router = useRouter();
+
+  const defaultValues = {
+    email: "",
+    password: "",
+  };
+
+  function onSubmit(values) {
+    console.log(values);
+  }
+
+  const formFieldData = [
+    // { id: "1", name: "username", title: "Username", placeholder: "username" },
+    { id: "1", name: "email", title: "Email", placeholder: "adad@gmail.com" },
+    // { id: "3", name: "mobile", title: "Mobile", placeholder: "7668687768" },
+    { id: "2", name: "password", title: "Password", placeholder: "........" },
+  ];
+
+  return (
+    <>
+      <div className=" h-screen  flex flex-col gap-4 items-center justify-center">
+        <div className="border-2 h-[30rem] p-8 rounded-2xl items-center justify-center w-[30rem] overflow-hidden">
+          <Authform
+            onSubmit={() => onSubmit}
+            formFieldData={formFieldData}
+            formSchema={formSchema}
+            defaultValues={defaultValues}
+            classBame={"w-full"}
+          />
+          <div className=" h-12"></div>
+          <div className=" gap-4 ">
+            <span className=" pr-4"> Don't have an account ?</span>
+            <span className=" font-semibold text-md"> Register</span>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default login;
+
