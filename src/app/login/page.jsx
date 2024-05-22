@@ -23,7 +23,7 @@ const login = () => {
   };
   const dispatch = useDispatch();
 
-  const {authData ,loading,error} = useSelector((state) => state.auth);
+  const { authData, loading, error } = useSelector((state) => state.auth);
 
   console.log("sttatte", authData);
 
@@ -45,8 +45,7 @@ const login = () => {
     };
     console.log(data);
     dispatch(signIn(data)).then((res) => {
-      if (res.payload.status ==true) {
-
+      if (res.payload.status == true) {
         router.push("/profile");
       }
     });
@@ -75,7 +74,7 @@ const login = () => {
           <div className=" gap-4 ">
             <span className=" pr-4"> Don't have an account ?</span>
             <span className=" font-semibold text-md"> Register</span>
-            {error&& <span>{error}</span>}
+            {error && <span>{error}</span>}
           </div>
         </div>
       </div>

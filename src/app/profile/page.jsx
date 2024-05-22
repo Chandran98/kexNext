@@ -7,8 +7,8 @@ const Profile = () => {
   const userData = useSelector((state) => state.auth.authData);
   return (
     <div>
-         <div>dsafasdf{userData.message}</div>
-         <div>{userData.token}</div>
+         <div>dsafasdf{userData&& userData.message}</div>
+         <div>{userData&& userData.token}</div>
     </div>
   )
 }
