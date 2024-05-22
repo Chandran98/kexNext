@@ -3,14 +3,13 @@
 import React, { useState } from "react";
 
 const watchlist = () => {
-  const [tabValue, setTab] = useState();
+  const [tabValue, setTab] = useState("INR");
   console.log("tabVsxcalue", tabValue);
 
   const tabList = [
     { title: "INR", value: "inr" },
     { title: "USDT", value: "usdt" },
     { title: "KAITCOIN", value: "kaitcoin" },
-    { title: "BNB", value: "bnb" },
   ];
 
   return (
@@ -27,8 +26,7 @@ const watchlist = () => {
         ))}
       </div>
       <div className=" p-4">
-
-      <div className=""> dsadsfasf{tabValue}</div>
+        <div className=""> dsadsfasf {tabValue}</div>
       </div>
     </div>
   );
