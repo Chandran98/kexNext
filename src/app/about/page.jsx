@@ -21,7 +21,7 @@ const about = () => {
       // function onFooEvent(value) {
       //   setFooEvents((previous) => [...previous, value]);
       // }
-      socket.emit("joinRoom", { message: "BTC/INR" });
+      socket.emit("joinRoom", { message: "BTC/USDT" });
 
       // socket.on("market-price-data", (data) => {
       //   setFooEvents(data);
@@ -33,31 +33,49 @@ const about = () => {
           setBuyOrder(buyOrders.slice(0, 10)); // Get first 10 buy orders
         }
       });
-      socket.on("sell_order", (data) => {
-        setSellOrder(data);
-        console.log("sellOrder", sellOrder);
+      socket.on("sell_order", (data) => {if (data && data.status) {
+        const buyOrders = data.data.filter((order) => order.type === "sell");
+        setSellOrder(buyOrders.slice(0, 10).reverse()); // Get first 10 buy orders
+      }
       });
     } catch (error) {
       console.log(error, "err");
     }
   });
 
-  return <div className="p-8">
+  return <div className=" "><div className="p-8">
+  <h1>Market Sell Orders</h1>
+  {sellOrder.length === 0 ? (
+    <p>Loading...</p>
+  ) : (
+    <ul>
+      {sellOrder.map((order, index) => (
+       <li className="flex" key={index}>
+       <p>Price: {Number(order.price).toFixed(2)}</p>
+       <p>Amount: {Number(order.amount).toFixed(2)}</p>
+       <p>Total: {Number(order.total).toFixed(2)}</p>
+     </li>
+      ))}
+    </ul>
+  )}
+</div>
+    <div className="p-8">
   <h1>Market Buy Orders</h1>
   {buyOrder.length === 0 ? (
     <p>Loading...</p>
   ) : (
     <ul>
       {buyOrder.map((order, index) => (
-        <li key={index}>
-          <p>Price: {order.price}</p>
-          <p>Amount: {order.amount}</p>
-          <p>Total: {order.total}</p>
-        </li>
+        <li className="flex" key={index}>
+        <p>Price: {Number(order.price).toFixed(2)}</p>
+        <p>Amount: {Number(order.amount).toFixed(2)}</p>
+        <p>Total: {Number(order.total).toFixed(2)}</p>
+      </li>
       ))}
     </ul>
   )}
 </div>
+  </div>
 };
 
 // export default withAuth(about);
