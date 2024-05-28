@@ -48,7 +48,7 @@ const cryptoSlice = createSlice({
       .addCase(marketDepth.pending, (state) => {
         state.loading = true;
       })
-      .addCase(marketDepth.pending, (state) => {
+      .addCase(marketDepth.fulfilled, (state) => {
         state.loading = false;
         state.data = action.payload;
       })
