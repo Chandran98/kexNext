@@ -3,7 +3,7 @@ import { DateTime } from '@syncfusion/ej2-react-charts';
 import {  useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-const CandleStick = (() => {
+const Chart = (() => {
   const [state, setState] = useState(null);
 
   useEffect(() => {
@@ -76,4 +76,4 @@ const CandleStick = (() => {
   );
 });
 
-export default CandleStick;
+export default Chart;
