@@ -30,7 +30,7 @@ const MarketChart= ({ id }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=INR&days=30&precision=2&interval=minutes`
+          `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=INR&days=1&precision=2&interval=minutes`
         );
         const data = await response.json();
         console.log("chartData33:", data);

@@ -2,9 +2,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import LabTabs from "../../components/trade/watchlist";
-import { marketDepthBuy,marketDepthSell ,fetchList} from "../../redux/reducer/cryptoReducer";
+import {
+  marketDepthBuy,
+  marketDepthSell,
+  fetchList,
+} from "../../redux/reducer/cryptoReducer";
 import { useDispatch, useSelector } from "react-redux";
 import MarketDepthDemo from "../../components/trade/market2Depth";
+import Chartflow from "../../components/trade/chart";
 import Image from "next/image";
 const trade = () => {
   const dispatch = useDispatch();
@@ -15,7 +20,8 @@ const trade = () => {
 
   const data = useSelector((state) => state.crypto);
   const [tabValue, setTab] = useState("INR");
-  const [pairSet, setPair] = useState("");
+  const [frstCurreny, setfrst] = useState("");
+  const [secondCurreny, setsecond] = useState("");
 
   const tabList = [
     { title: "INR", value: "inr" },
@@ -28,44 +34,54 @@ const trade = () => {
       (pair) => pair.secondcurrency.toUpperCase() === tabValue
     ) || [];
 
-
+    console.log("dfasfadsfadfasdfsdf",frstCurreny,secondCurreny)
   return (
     <div className="bg-gray-200 h-screen  w-full p-2 ">
       <div className="  bg-white h-20  mb-[0.75rem]"></div>
       <div className=" max-h-screen overflow-y-hidden  flex gap-3  relative">
-      <div className="relative  w-[50vw] bg-white p-3">
-      <div className="flex bg-gray-200 justify-evenly p-2 gap-2 rounded-lg">
-        {tabList.map((e, i) => (
-          <div
-            key={i}
-            onClick={() => setTab(e.title.toUpperCase())}
-            className={`rounded-lg p-2 cursor-pointer ${
-              tabValue === e.title ? "bg-gray-400" : "bg-white"
-            }`}
-          >
-            {e.title}
+        <div className="relative  w-[50vw] bg-white p-3">
+          <div className="flex bg-gray-200 justify-evenly p-2 gap-2 rounded-lg">
+            {tabList.map((e, i) => (
+              <div
+                key={i}
+                onClick={() => setTab(e.title.toUpperCase())}
+                className={`rounded-lg p-2 cursor-pointer ${
+                  tabValue === e.title ? "bg-gray-400" : "bg-white"
+                }`}
+              >
+                {e.title}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="relative p-4 h-[80vh] overflow-y-scroll">
-        {data.loading && <div>Loading...</div>}
+          <div className="relative p-4 h-[80vh] overflow-y-scroll">
+            {data.loading && <div>Loading...</div>}
 
-        {filteredPairs.map((e, i) => (
-          <div onClick={()=>setPair(`${e.firstcurrency.toUpperCase()}/${e.secondcurrency.toUpperCase()}`)} key={i} className="flex justify-between p-4">
-            <Image src={e.logo} alt="logo" height={30} width={30} />
-            <div>
-              {e.firstcurrency.toUpperCase()}/{e.secondcurrency.toUpperCase()}
-            </div>
-            <span>{e.lastprice}</span>
+            {filteredPairs.map((e, i) => (
+              <div
+                onClick={() => {
+                  setfrst(e.firstcurrency.toUpperCase()),
+                    setsecond(e.secondcurrency.toUpperCase());
+                }}
+                key={i}
+                className="flex justify-between p-4"
+              >
+                <Image src={e.logo} alt="logo" height={30} width={30} />
+                <div>
+                  {e.firstcurrency.toUpperCase()}/
+                  {e.secondcurrency.toUpperCase()}
+                </div>
+                <span>{e.lastprice}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-        <div className=" bg-white w-full ">ddsafdsf</div>
-        <div className=" bg-white w-[40vw] ">
+        </div>
+        <div className=" bg-white ">
+          <Chartflow frst={frstCurreny} second={secondCurreny} />
+        </div>
+        <div className=" bg-white w-[50vw] ">
           <div className="p-8 divide-y-4 divide-black ">
-          <MarketDepthDemo pair={pairSet}/>
-{/*            
+            <MarketDepthDemo pair={`${frstCurreny}/${secondCurreny}`} />
+            {/*            
             <div className="">
               <h1>Sell Orders</h1>
               {data?.sellsocket === 0 ? (

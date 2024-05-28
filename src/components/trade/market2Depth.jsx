@@ -15,7 +15,7 @@ const marketDepthDemo = ({pair}) => {
       const socket = io("https://liclxnvmxb.kairaaexchange.com/", {
         transports: ["websockets", "polling"],
       });
-      let dataaa=pair===""?"BTC/INR":pair
+      let dataaa=pair==="/"?"BTC/INR":pair
       console.log("dataaa",dataaa)
       socket.emit("joinRoom", { message: dataaa });
 
@@ -38,7 +38,7 @@ const marketDepthDemo = ({pair}) => {
 
   return (
     <div className=" ">
-      <div className="p-8">
+      <div className="p-4">
         <h1>Market Sell Orders</h1>
         {sellOrder.length === 0 ? (
           <p>Loading...</p>
@@ -54,7 +54,7 @@ const marketDepthDemo = ({pair}) => {
           </ul>
         )}
       </div>
-      <div className="p-8">
+      <div className="p-4">
         <h1>Market Buy Orders</h1>
         {buyOrder.length === 0 ? (
           <p>Loading...</p>
