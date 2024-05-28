@@ -8,7 +8,7 @@ const CandleStick = (() => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await fetch('http://localhost:8290/trade/chart/history?symbol=KAITCOIN%2FINR&resolution=60&from=1694160729&to=1695456790');
+        const response = await fetch('http://localhost:8290/trade/chart/history?symbol=BTC%2FINR&resolution=120&from=1694160729&to=1695456790');
         const data = await response.json();
         
         // Format the data for klinecharts
